@@ -1,220 +1,149 @@
-\# DLP Exception Governance Agent
+# 🛡️ DLP Exception Governance Agent
 
+Agente creado en **Microsoft Copilot Studio** para ayudar a revisar excepciones de DLP y correlacionarlas con alertas generadas por reglas de DLP.
 
+> El objetivo del MVP es facilitar la revisión de excepciones, identificar actividad reciente asociada y priorizar qué casos deben revisarse, renovarse, retirarse o escalarse.
 
-Agente creado en Microsoft Copilot Studio para ayudar a revisar excepciones de DLP y correlacionarlas con alertas generadas por reglas de DLP.
+---
 
-
-
-El objetivo del MVP es facilitar la revisión de excepciones, identificar actividad reciente asociada y ayudar a priorizar qué casos deben revisarse, renovarse, retirarse o escalarse.
-
-
-
-\## Objetivo del proyecto
-
-
+## 🎯 Objetivo
 
 El agente permite analizar un inventario de excepciones DLP y compararlo con un export de alertas DLP para responder preguntas como:
 
+| Pregunta                                      | Valor                      |
+| --------------------------------------------- | -------------------------- |
+| ¿Qué excepciones están activas?               | Visibilidad del inventario |
+| ¿Qué excepciones han caducado?                | Control de gobierno        |
+| ¿Qué excepciones tienen alertas recientes?    | Evidencia de uso           |
+| ¿Qué excepciones activas no tienen actividad? | Posible retirada           |
+| ¿Qué excepciones deben revisarse primero?     | Priorización de riesgo     |
 
+---
 
-\* Qué excepciones están activas.
-
-\* Qué excepciones han caducado.
-
-\* Qué excepciones tienen alertas recientes.
-
-\* Qué excepciones activas no parecen estar siendo utilizadas.
-
-\* Qué excepciones deberían revisarse primero.
-
-\* Qué acción se recomienda para cada caso.
-
-
-
-\## Fuentes de datos del MVP
-
-
+## 📂 Fuentes de datos del MVP
 
 El MVP utiliza dos ficheros Excel sintéticos:
 
-
-
 ```text
-
-data/DLP\_Excepciones\_MVP\_ES.xlsx
-
-data/DLP\_Alertas\_MVP\_ES.xlsx
-
+data/DLP_Excepciones_MVP_ES.xlsx
+data/DLP_Alertas_MVP_ES.xlsx
 ```
 
+| Dataset                       | Descripción                                |
+| ----------------------------- | ------------------------------------------ |
+| `DLP_Excepciones_MVP_ES.xlsx` | Inventario de excepciones DLP              |
+| `DLP_Alertas_MVP_ES.xlsx`     | Export de alertas generadas por reglas DLP |
 
+---
 
-El primer fichero representa el inventario de excepciones DLP.
+## 🔗 Lógica principal
 
-
-
-El segundo fichero representa un export de alertas generadas por reglas de DLP.
-
-
-
-La correlación principal se realiza cruzando:
-
-
+La correlación entre ambos datasets se basa en:
 
 ```text
-
 Solicitante = Usuario
-
 DirectivaDLP = Directiva
-
 Sucedido dentro de los últimos 30 días
-
 ```
 
-
-
-El resultado principal que debe completar o explicar el agente es:
-
-
+El resultado principal es el cálculo de:
 
 ```text
-
 Alertas30Dias
-
 ```
 
+---
 
-
-\## Capacidades principales
-
-
+## ✅ Capacidades principales
 
 El agente está diseñado para:
 
+* Consultar excepciones DLP.
+* Revisar estado y fecha de caducidad.
+* Buscar alertas relacionadas en el export DLP.
+* Calcular actividad reciente en los últimos 30 días.
+* Detectar excepciones activas sin uso reciente.
+* Identificar excepciones caducadas con actividad.
+* Recomendar acciones de revisión, renovación, retirada o escalado.
+* Generar resúmenes ejecutivos para equipos de seguridad o gobierno.
 
+---
 
-\* Consultar excepciones DLP.
-
-\* Revisar su estado y fecha de caducidad.
-
-\* Buscar alertas relacionadas en el export DLP.
-
-\* Calcular actividad reciente en los últimos 30 días.
-
-\* Identificar excepciones sin uso reciente.
-
-\* Detectar excepciones caducadas con actividad.
-
-\* Recomendar acciones de revisión, renovación, retirada o escalado.
-
-\* Generar resúmenes ejecutivos para equipos de seguridad o gobierno.
-
-
-
-\## Estructura del repositorio
-
-
+## 🧱 Estructura del repositorio
 
 ```text
-
 dlp-exception-governance-agent/
-
 │
-
 ├── README.md
-
-├── PROJECT\_OVERVIEW.md
-
-├── SETUP\_GUIDE.md
-
-├── DEMO\_GUIDE.md
-
+├── PROJECT_OVERVIEW.md
+├── SETUP_GUIDE.md
+├── DEMO_GUIDE.md
 ├── ROADMAP.md
-
 │
-
 ├── data/
-
-│   ├── DLP\_Excepciones\_MVP\_ES.xlsx
-
-│   └── DLP\_Alertas\_MVP\_ES.xlsx
-
+│   ├── DLP_Excepciones_MVP_ES.xlsx
+│   └── DLP_Alertas_MVP_ES.xlsx
 │
-
 ├── copilot-studio/
-
 │   ├── agent-instructions.md
-
 │   └── test-prompts.md
-
 │
-
 └── docs/
-
-&#x20;   ├── data-model.md
-
-&#x20;   ├── correlation-logic.md
-
-&#x20;   └── use-cases.md
-
+    ├── data-model.md
+    ├── correlation-logic.md
+    └── use-cases.md
 ```
 
+---
 
+## 📌 Alcance del MVP
 
-\## Alcance del MVP
+### Incluido
 
+| Incluido en el MVP                             |
+| ---------------------------------------------- |
+| Dataset sintético de excepciones DLP           |
+| Dataset sintético de alertas DLP               |
+| Excepciones asociadas a usuarios               |
+| Correlación por usuario, directiva DLP y fecha |
+| Cálculo de alertas en los últimos 30 días      |
+| Recomendaciones básicas de gobierno            |
 
+### Fuera de alcance
 
-Incluido en el MVP:
+| No incluido en el MVP                     |
+| ----------------------------------------- |
+| Conexión directa con Microsoft Purview    |
+| Uso de APIs reales                        |
+| Modelo en Dataverse                       |
+| Arquitectura multiagente                  |
+| Automatización completa del ciclo de vida |
+| Remediación automática                    |
 
+---
 
+## 🚀 Uso esperado
 
-\* Dataset sintético de excepciones DLP.
+Este proyecto está pensado como una **demo funcional para un hackathon**, manteniendo una estructura sencilla pero escalable.
 
-\* Dataset sintético de alertas DLP.
+La idea es demostrar cómo un agente puede ayudar a gobernar excepciones DLP combinando:
 
-\* Excepciones asociadas únicamente a usuarios.
+```text
+Inventario de excepciones
++
+Actividad real de alertas
++
+Recomendaciones accionables
+```
 
-\* Correlación por usuario, directiva DLP y fecha.
+---
 
-\* Cálculo de alertas en los últimos 30 días.
+## ⚠️ Aviso
 
-\* Recomendaciones básicas de gobierno.
+Los datos incluidos en el repositorio son **sintéticos**.
 
+No deben incluirse datos reales de usuarios, clientes, documentos sensibles o entornos productivos.
 
-
-Fuera del MVP:
-
-
-
-\* Conexión directa con Microsoft Purview.
-
-\* Uso de APIs reales.
-
-\* Modelo en Dataverse.
-
-\* Arquitectura multiagente.
-
-\* Automatización completa del ciclo de vida de excepciones.
-
-\* Acciones de remediación automáticas.
-
-
-
-\## Uso esperado
-
-
-
-Este proyecto está pensado como una demo funcional para un hackathon, pero con una estructura que permita evolucionarlo posteriormente hacia una solución más completa de gobierno de excepciones DLP.
-
-
-
-\## Aviso
-
-
-
-Los datos incluidos en el repositorio son sintéticos y no deben contener información real de usuarios, clientes, documentos sensibles o entornos productivos.
 
 
 
